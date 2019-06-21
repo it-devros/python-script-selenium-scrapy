@@ -25,8 +25,6 @@ class americanbodyworks(scrapy.Spider):
 		yield scrapy.Request(url=init_url, callback=self.body) 
 
 	def body(self, response):
-		with open('response.html', 'wb') as f:
-			f.write(response.body)
 		store_list = response.xpath('//marker')	
 		for store in store_list:
 			item = ChainItem()

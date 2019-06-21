@@ -22,8 +22,6 @@ class blackbeardiner(scrapy.Spider):
 
 	def body(self, response):
 		print("=========  Checking.......")
-		with open('response.html', 'wb') as f:
-			f.write(response.body)
 
 		store_list = json.loads(response.body.split('jsonp(')[1][:-2])
 		for store in store_list:

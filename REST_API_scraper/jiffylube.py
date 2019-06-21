@@ -10,11 +10,7 @@ from chainxy.items import ChainItem
 class JiffylubeSpider(scrapy.Spider):
     name = "jiffylube"
     request_url = "https://www.jiffylube.com/api/locations?lat=%s&lng=%s"
-<<<<<<< HEAD
     uid_list = []
-=======
-    uid_list = [];
->>>>>>> ff363424058f39a36f4e98c07350af5fadbfe4b9
 
     def __init__(self):
         long_lat_fp = open('uscanplaces.csv', 'rb')
