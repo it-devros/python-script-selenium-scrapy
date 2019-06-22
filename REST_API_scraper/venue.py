@@ -13,8 +13,8 @@ class VenuesSpider(scrapy.Spider):
   start_url = 'https://static.wsstack.nn4maws.net/v1/venues/en_gb/venues.json'
 
   def start_requests(self):
-		url = self.start_url
-		yield scrapy.Request(url=url, callback=self.parse_Venues)
+    url = self.start_url
+    yield scrapy.Request(url=url, callback=self.parse_Venues)
 
   def parse_Venues(self, response):
     body = json.loads(response.body)
@@ -43,7 +43,7 @@ class VenuesSpider(scrapy.Spider):
         yield item
   
   def validateStr(self, string):
-		try:
-			return string.replace(u'\u2013', '-').replace(u'\u2019', "'").strip()
-		except:
-			return ""
+    try:
+      return string.replace(u'\u2013', '-').replace(u'\u2019', "'").strip()
+    except:
+      return ""

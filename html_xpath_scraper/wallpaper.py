@@ -7,40 +7,40 @@ import pdb
 
 
 class WallpaperSpider(scrapy.Spider):
-	name = 'wallpaper'
-	allowed_domain = 'http://store.lynnchalk.com'
-	root_url = 'http://store.lynnchalk.com/wallpaper/quadrille/?sort=featured&page='
+  name = 'wallpaper'
+  allowed_domain = 'http://store.lynnchalk.com'
+  root_url = 'http://store.lynnchalk.com/wallpaper/quadrille/?sort=featured&page='
 
 
-	def start_requests(self):
-		i = 1
-		while i < 5:
-			url = self.root_url + str(i)
-			yield scrapy.Request(url=url, callback=self.parse_list)
-			i = i + 1
+  def start_requests(self):
+    i = 1
+    while i < 5:
+      url = self.root_url + str(i)
+      yield scrapy.Request(url=url, callback=self.parse_list)
+      i = i + 1
 
 
-	def parse_list(self, response):
-		url_list = response.xpath('//div[@class="product-item-details"]/a/@href').extract()
-		for url in url_list:
-			yield scrapy.Request(url=url, callback=self.parse_element)
+  def parse_list(self, response):
+    url_list = response.xpath('//div[@class="product-item-details"]/a/@href').extract()
+    for url in url_list:
+      yield scrapy.Request(url=url, callback=self.parse_element)
 
 
-	def parse_element(self, response):
-		item = SecondItem()
-		item['name'] = self.validateStr(response.xpath('//h1[@class="product-title"]/text()').extract_first())
-		item['category'] = 'Wallpaper'
-		item['price'] = self.validateStr(response.xpath('//span[@class="price-value"]/text()').extract_first())
-		item['sku'] = self.validateStr(response.xpath('//dd[@itemprop="sku"]/text()').extract_first())
-		if item['price']:
-			item['price'] = item['price'].replace('$', '')
+  def parse_element(self, response):
+    item = SecondItem()
+    item['name'] = self.validateStr(response.xpath('//h1[@class="product-title"]/text()').extract_first())
+    item['category'] = 'Wallpaper'
+    item['price'] = self.validateStr(response.xpath('//span[@class="price-value"]/text()').extract_first())
+    item['sku'] = self.validateStr(response.xpath('//dd[@itemprop="sku"]/text()').extract_first())
+    if item['price']:
+      item['price'] = item['price'].replace('$', '')
 
-		yield item
+    yield item
 
 
-	def validateStr(self, str):
-		try:
-			return str.strip()
-		except Exception as validateErr:
-			print validateErr
-			return ''
+  def validateStr(self, str):
+    try:
+      return str.strip()
+    except Exception as validateErr:
+      print validateErr
+      return ''
